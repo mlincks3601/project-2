@@ -1,14 +1,16 @@
-from opencage.geocoder import OpenCageGeocode
+import os
 import csv
 
 with open('Pixies_tours.csv', 'r') as file:
-    Pixies_tours.csv = csv.reader(file, delimiter=',')
+    Pixies_tours = csv.reader(file, delimiter=',')
+    
+    
 
-key = 2e6353fbfb1c46b9b584abfe80e40aed
+# key = 2e6353fbfb1c46b9b584abfe80e40aed
+from opencage.geocoder import OpenCageGeocode
+geocoder = OpenCageGeocode("2e6353fbfb1c46b9b584abfe80e40aed")
 
 
-	
-geocoder = OpenCageGeocode(key)
 # create empty lists
 list_lat = []   
 
@@ -17,7 +19,7 @@ list_long = []
 
 # iterate over rows in dataframe
 	
-for index, row in Pixies_tour.iterrows(): 
+for index, row in Pixies_tours.iterrows(): 
 
 
     City = row['City']
