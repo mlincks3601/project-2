@@ -4,12 +4,14 @@ import csv
 csvpath = os.path.join("Pixies_tour.csv")
 
 
-with open('Pixies_tours.csv', 'r') as file:
+with open('csvpath', 'r') as file:
     Pixies_tours = csv.reader(file, delimiter=',')
 
 print(Pixies_tours)
     
-    
+for row in Pixies_tours:
+        print(row)
+   
 
 # # key = 2e6353fbfb1c46b9b584abfe80e40aed
 # from opencage.geocoder import OpenCageGeocode
