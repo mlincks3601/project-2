@@ -1,0 +1,1 @@
+FLASK_APP=band_tours/app.py flask run
