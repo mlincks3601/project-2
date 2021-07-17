@@ -8,6 +8,10 @@ from flask import (
     request,
     redirect)
 
+from sqlalchemy import create_engine
+
+# from config import (username, pw)
+
 #################################################
 # Flask Setup
 #################################################
@@ -16,16 +20,17 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-
+connectionstring = "postgres:Tman2111@localhost:5432/project-2"
+engine = create_engine(f'postgresql://{connectionstring}')
 from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or engine
 
 # Remove tracking modifications
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-from .models import Pet
+from .models import Tours
 #from  .models import Tours, Cities
 
 
