@@ -1,17 +1,6 @@
-// Add a tile layer (the background map image) to our map
-// We use the addTo method to add objects to our map
-// L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-  // attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.opens
-  // tileSize: 512,
-  // maxZoom: 18,
-  // zoomOffset: -1,
-  // id: "mapbox/streets-v11",
-  // accessToken: API_KEY
-// }).addTo(myMap);
-// 
 
 // Creating map object
-var myMap = L.map("map-id", {
+var myMap = L.map("marker-map", {
   center: [31.51, -96.42],
   zoom: 8
 });
@@ -35,7 +24,7 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
 // };
 
 // Create the map with our layers
-// var map = L.map("map-id", {
+// var map = L.map("marker-map", {
   // center: [42.88, -97.38],
   // zoom: 5,
   // layers: [
@@ -46,8 +35,7 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
   // ]
 // });
 // 
-// Add our 'lightmap' tile layer to the map
-// lightmap.addTo(map);
+
 
 // Create an overlays object to add to the layer control
 // var overlays = {
