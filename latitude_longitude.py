@@ -1,25 +1,30 @@
 import os
 import csv
 
-csvpath = os.path.join("Pixies_tour.csv")
+csvpath = os.path.join("static/data/Pixies_tours.csv")
 
 
-with open('Pixies_tours.csv', 'r') as file:
-    Pixies_tours = csv.reader(file, delimiter=',')
+with open(csvpath, 'r') as file:
+    # Pixies_tours = csv.reader(file, delimiter=',')
 
-print(Pixies_tours)
+    # print(Pixies_tours)
     
-    
+    # for row in Pixies_tours:
+    #         print(row)
+   
 
-# # key = 2e6353fbfb1c46b9b584abfe80e40aed
-# from opencage.geocoder import OpenCageGeocode
-# geocoder = OpenCageGeocode("2e6353fbfb1c46b9b584abfe80e40aed")
+# key = 2e6353fbfb1c46b9b584abfe80e40aed
+from opencage.geocoder import OpenCageGeocode
+geocoder = OpenCageGeocode("2e6353fbfb1c46b9b584abfe80e40aed")
+
+result = geocoder.geocode("Indianapolis, Indiana", no_annotations= '1')
+print(result)
 
 
 # # create empty lists
-# list_lat = []   
+list_lat = []   
 
-# list_long = []
+list_long = []
 
 
 # # iterate over rows in dataframe
