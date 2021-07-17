@@ -2,6 +2,7 @@
 import os
 from flask import (
     Flask,
+    json,
     render_template,
     jsonify,
     request,
@@ -25,6 +26,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from .models import Pet
+#from  .models import Tours, Cities
 
 
 # create route that renders index.html template
@@ -33,47 +35,50 @@ def home():
     return render_template("index.html")
 
 
-# Query the database and send the jsonified results
-@app.route("/send", methods=["GET", "POST"])
-def send():
-    if request.method == "POST":
-        name = request.form["petName"]
-        lat = request.form["petLat"]
-        lon = request.form["petLon"]
+@app.route("/api/bandmiles/<band>")
+def bandmiles(band):
+    # results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
+    #result = db.session.query(Tours).all()
 
-        pet = Pet(name=name, lat=lat, lon=lon)
-        db.session.add(pet)
-        db.session.commit()
-        return redirect("/", code=302)
+    # hover_text = [result[0] for result in results]
+    # lat = [result[1] for result in results]
+    # lon = [result[2] for result in results]
 
-    return render_template("form.html")
+    # pet_data = [{
+    #     "type": "scattergeo",
+    #     "locationmode": "USA-states",
+    #     "lat": lat,
+    #     "lon": lon,
+    #     "text": hover_text,
+    #     "hoverinfo": "text",
+    #     "marker": {
+    #         "size": 15,
+    #         "line": {
+    #             "color": "rgb(8,8,8)",
+    #             "width": 1
+    #         },
+    #     }
+    # }]
 
-
-@app.route("/api/pals")
-def pals():
-    results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
-
-    hover_text = [result[0] for result in results]
-    lat = [result[1] for result in results]
-    lon = [result[2] for result in results]
-
-    pet_data = [{
-        "type": "scattergeo",
-        "locationmode": "USA-states",
-        "lat": lat,
-        "lon": lon,
-        "text": hover_text,
-        "hoverinfo": "text",
-        "marker": {
-            "size": 15,
-            "line": {
-                "color": "rgb(8,8,8)",
-                "width": 1
-            },
-        }
+    sample_data = [{
+        'name': band,
+        'date': '2021-07-17'
     }]
 
-    return jsonify(pet_data)
+    return jsonify(sample_data)
+
+@app.route("/api/bandyear/<band>/<year>")
+def bandyearloc(band, year):
+
+    output_data = [
+        {
+            'band': band,
+            'year': year
+        }
+    ]
+    return jsonify(output_data)
+
+
 
 
 if __name__ == "__main__":
