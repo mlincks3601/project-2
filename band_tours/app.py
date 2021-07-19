@@ -30,7 +30,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-from .models import Tours
+from .models import result
 #from  .models import Tours, Cities
 
 
@@ -43,7 +43,7 @@ def home():
 @app.route("/api/bandmiles/<band>")
 def bandmiles(band):
     # results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
-    result = db.session.query(Tours).all()
+    result = db.session.query(result).all()
 
     # hover_text = [result[0] for result in results]
     # lat = [result[1] for result in results]
@@ -63,12 +63,12 @@ def bandmiles(band):
     #             "width": 1
     #         },
     #     }
-    # }]
-
-    #
     }]
 
-    return jsonify(sample_data)
+    #
+    #}]
+
+    return jsonify(Tours)
 
 @app.route("/api/bandyear/<band>/<year>")
 def bandyearloc(band, year):
