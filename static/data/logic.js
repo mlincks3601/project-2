@@ -1,9 +1,16 @@
-
+// Initialize all of the LayerGroups we'll be using
+var layers = {
+  Pixies: new L.LayerGroup(),
+  Willie_Nelson: new L.LayerGroup(),
+  Bring_me_the_horizon: new L.LayerGroup()
+};
 // Creating map object
 var myMap = L.map("marker-map", {
   center: [31.51, -96.42],
   zoom: 8
 });
+
+
 
 // Create the tile layer that will be the background of our map
 var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -13,6 +20,28 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
   accessToken: API_KEY
 }).addTo(myMap);
 // console.log(API_KEY);
+
+//Read in our band year location Data from SQL
+// Use this link to get the geojson data.
+var link = "static/data/bandyearlocation.json";
+
+// Grabbing our GeoJSON data..
+d3.json(link).then(function(response) {
+  // Creating a GeoJSON layer with the retrieved data
+  console.log(response);
+
+
+//for loop for coordinates
+for (var i = 0; i < response.length; i++) {
+  var location = response[i].location;
+
+  if (location) {
+    L.marker([location.coordinates[1], location.coordinates[0]]).addTo(myMap);
+  }
+}
+});
+
+
 
 
 // Initialize all of the LayerGroups we'll be using
