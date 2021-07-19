@@ -1,0 +1,56 @@
+[
+    {
+        "city": "las vegas",
+        "state": "NV",
+        "lat": 45,
+        "long": -34
+    },
+    {
+        "city": "Las vegas",
+        "state": "NV",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Las vegas",
+        "state": "NV",
+        "lat": 20,
+        "long": -45
+    },
+    {
+        "city": "Houston",
+        "state": "TX",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Houston",
+        "state": "TX",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Houston",
+        "state": "TX",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Bronx",
+        "state": "NY",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Bronx",
+        "state": "NY",
+        "lat": 35,
+        "long": -14
+    },
+    {
+        "city": "Bronx",
+        "state": "NY",
+        "lat": 35,
+        "long": -14
+    }
+]
