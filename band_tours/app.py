@@ -68,7 +68,7 @@ def bandmiles(band):
     #
     }]
 
-    return jsonify(sample_data)
+    return jsonify(Tours)
 
 @app.route("/api/bandyear/<band>/<year>")
 def bandyearloc(band, year):
