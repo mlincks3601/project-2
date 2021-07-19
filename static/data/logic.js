@@ -1,3 +1,5 @@
+
+
 // Initialize all of the LayerGroups we'll be using
 var layers = {
   Pixies: new L.LayerGroup(),
@@ -25,20 +27,28 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
 // Use this link to get the geojson data.
 var link = "static/data/bandyearlocation.json";
 
-// Grabbing our GeoJSON data..
+
+// Grabbing our sql data..
 d3.json(link).then(function(response) {
+  var markerclustergroup = L.markerClusterGroup();
   // Creating a GeoJSON layer with the retrieved data
   console.log(response);
 
 
+
 //for loop for coordinates
 for (var i = 0; i < response.length; i++) {
-  var location = response[i].location;
-
+  var location = response[i];
+//check for location property
   if (location) {
-    L.marker([location.coordinates[1], location.coordinates[0]]).addTo(myMap);
-  }
+  // Add a new marker to the cluster group and bind a pop-up
+  L.marker([location.lat, location.long])
+  .bindPopup(location.state).addTo(myMap);
+  
 }
+
+}
+myMap.addLayer(markerclustergroup);
 });
 
 
