@@ -63,10 +63,10 @@ def bandmiles(band):
     #             "width": 1
     #         },
     #     }
-    # }]
+    }]
 
     #
-    }]
+    #}]
 
     return jsonify(Tours)
 
