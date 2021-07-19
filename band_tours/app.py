@@ -43,7 +43,7 @@ def home():
 @app.route("/api/bandmiles/<band>")
 def bandmiles(band):
     # results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
-    #result = db.session.query(Tours).all()
+    result = db.session.query(Tours).all()
 
     # hover_text = [result[0] for result in results]
     # lat = [result[1] for result in results]
@@ -65,9 +65,7 @@ def bandmiles(band):
     #     }
     # }]
 
-    sample_data = [{
-        'name': band,
-        'date': '2021-07-17'
+    #
     }]
 
     return jsonify(sample_data)
