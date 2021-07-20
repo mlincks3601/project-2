@@ -51,10 +51,7 @@ def bandconcerts(year):
     # hover_text = [result[0] for result in results]
     #
 
-    tour_data = [{
-        'id': r.id,
-        'year': r.year,
-        'city': r.city,
+    tour_data = [{'id':r.id,'year':r.year,'city':r.city} for r in results]
         # "locationmode": "USA-states",
         #  "lat": lat,
         #  "lon": lon,
@@ -65,7 +62,7 @@ def bandconcerts(year):
         #     "line": {
         #         "color": "rgb(8,8,8)",
         #         "width": 1
-    }]
+    # ]
 
     #
     #}]
