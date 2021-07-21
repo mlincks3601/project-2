@@ -23,40 +23,40 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
 
 //Read in our band year location Data from SQL
 // Use this link to get the geojson data.
-// var band = "Pixies"
-// var link = `/api/bandyear/${band}`
+var band = "Pixies"
+var link = `/api/bandyear/${band}`
 
 
 // // Grabbing our sql data..
-// d3.json(band).then(function(response) {
-//   var markerclustergroup = L.markerClusterGroup();
-//   // Creating a layer with the retrieved data
-//   console.log(response);
+d3.json(link).then(function(response) {
+  var markerclustergroup = L.markerClusterGroup();
+  // Creating a layer with the retrieved data
+  console.log(response);
 
 
 
 // //for loop for coordinates
-// for (var i = 0; i < response.length; i++) {
-//   var location = response[i];
-// //check for location property
-//   if (location) {
-//   // Add a new marker to the cluster group and bind a pop-up
-//   L.marker([location.lat, location.long])
-//   .bindPopup(location.state).addTo(myMap);
+for (var i = 0; i < response.length; i++) {
+  var location = response[i];
+//check for location property
+  if (location) {
+  // Add a new marker to the cluster group and bind a pop-up
+  L.marker([location.lat, location.long])
+  .bindPopup(location.state).addTo(myMap);
   
-// }
-// }
-// myMap.addLayer(markerclustergroup);
-// });
+}
+}
+myMap.addLayer(markerclustergroup);
+});
 
-// var markers = L.markerClusterGroup();
-// markers.addLayer(L.marker([lat[1], [0]])
-//         .bindPopup(response[i].descriptor));
+var markers = L.markerClusterGroup();
+markers.addLayer(L.marker([lat[1], [0]])
+        .bindPopup(response[i].descriptor));
 
-// var marker = L.marker([32,-16], {
-//   draggable: true,
-//   title: "My First Marker"
-// }).addTo(myMap);
+var marker = L.marker([32,-16], {
+  draggable: true,
+  title: "My First Marker"
+}).addTo(myMap);
 
 
 
