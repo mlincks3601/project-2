@@ -20,7 +20,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-connectionstring = "postgresql+psycopg2://postgres:Tman2111@localhost:5432/project-2"
+connectionstring = "postgresql+psycopg2://postgres:3601@localhost:5432/project-2"
 #engine = create_engine(f'postgresql+psycopg2://{connectionstring}')
 from flask_sqlalchemy import SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or connectionstring
@@ -38,6 +38,14 @@ from .models import Tours
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/api/latlng")
+def lat_lng():
+    results = db.session.query(Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
+    
+    output = [{'lat':r.lat, 'long':r.long} for r in results]
+
+    return jsonify(output)
 
 
 @app.route("/api/bandconcerts/<band_name>")

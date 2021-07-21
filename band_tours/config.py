@@ -1,2 +1,2 @@
-pw = Tman2111
+pw = 3601
 username = postgres

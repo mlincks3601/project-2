@@ -12,8 +12,6 @@ var myMap = L.map("marker-map", {
   zoom: 8
 });
 
-
-
 // Create the tile layer that will be the background of our map
 var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
@@ -25,11 +23,12 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
 
 //Read in our band year location Data from SQL
 // Use this link to get the geojson data.
-// var link = 
+var band = "Pixies"
+var link = `/api/bandyear/${band}`
 
 
 // Grabbing our sql data..
-d3.json("http://127.0.0.1:5000/bandconcerts").then(function(response) {
+d3.json(band).then(function(response) {
   var markerclustergroup = L.markerClusterGroup();
   // Creating a layer with the retrieved data
   console.log(response);
@@ -46,10 +45,18 @@ for (var i = 0; i < response.length; i++) {
   .bindPopup(location.state).addTo(myMap);
   
 }
-
 }
 myMap.addLayer(markerclustergroup);
 });
+
+var markers = L.markerClusterGroup();
+markers.addLayer(L.marker([lat[1], [0]])
+        .bindPopup(response[i].descriptor));
+
+var marker = L.marker([32,-16], {
+  draggable: true,
+  title: "My First Marker"
+}).addTo(myMap);
 
 
 
