@@ -1,39 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pet Pals!</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <meta charset="UTF-8">
+  <title>Pixie Tour project 2</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Sanchez" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- Icons -->
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="static/css/leaflet.extra-markers.min.css">
+
+   <!-- Leaflet CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+ integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+ crossorigin=""/>
+ <!-- Marker Cluster CSS -->
+ <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+ <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
+
+  <!-- Our CSS -->
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="jumbotron" style="text-align: center">
-            <h1>Pet Pal</h1>
-            <p>Find your pet a pal!</p>
+
+
+  <div class="wrapper">
+      <div class="jumbotron jumbotron-fluid" id="title" style="height: 300px;background-color: aquamarine;">
+        <div class="justify-content-center">
+          <h1 class="display-4">Band Tour Routes</h1>
+          <p class="lead"><p> •The band named "Pixies" and their tour dates mapped out and compared by the distance traveled for all 4 years. </p>
         </div>
+      </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Look at all of the current pet pals!</h2>
-                <div id="plot"></div>
-            </div>
+
+      <div class = 'row'>
+        <div class="col-md-6" id='select-band-menu'>
+          <ul class="justify-content-center">
+            <h1> Select The Band </h1>
+
+            <select>
+              <option value="Pixies">Pixies</option>
+              <option value="Willie Nelson">Willie Nelson</option>
+              <option value="Bring Me The Horizon">Bring Me The Horizon</option>
+            </select>
+          </ul>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <h2><a href="/send">Add your pet here!</a></h2>
-            </div>
+        <div class="col-md-6" id='marker-map' style="height: 300px; background-color: aquamarine;">
+          <h1>The Marker Map</h1>
         </div>
-    </div>
+      </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+      <div class = 'row'>
+        <div class="col-md-6" id='select-year-menu'>
+          <ul class="justify-content-center">
+            <h1> Select year </h1>
+            <select>
+              <option value="2005">2005</option>
+              <option value="2010">2010</option>
+              <option value="2015">2015</option>
+              <option value="2019">2019</option>
 
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+            </select>
+          </ul>
+        </div>
+        <br>
+        <div class="col-md-6" id='barchart' style="height: 300px;background-color: aquamarine;">
+          <h1>The Bar Chart</h1>
+        </div>
+      </div>
+      <br>
+      <div class="col-md-4" style='height: 200px;background-color: yellow;'>
+        <ul class="justify-content-center">
+          <h1> Summary </h1>
+          <p> •This is where we will put our miles driven by year and band</p>
+        </ul>
+      </div>
+  
+
+      
+  </div>
+  <!-- <div id="map"> </div> -->
+     
+     
+
+    <!-- <div class="row justify-content-end" > -->
+      <!-- <div class="alert alert-primary" role="alert"> -->
+        <!-- <ul class="nav justify-content-center"> -->
+            <!-- <h2>Band Tour Routes for 4 Years</h2> -->
+        <!-- </ul> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  
+  
+  
+  <!-- D3 and D3 Request Link-->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <!-- <script src = "https://d3js.org/d3-request.v1.min.js"></script> -->
+
+
+  <!-- <script>d3.json('/api/bandconcerts/<year>', function(bandconcerts){
+       console.log(bandconcerts);
+   });
+   </script> -->
+
+
+  <!-- MomentJS -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
+   <!-- Marker Cluster JS -->
+  <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Icons -->
+  <script src="static/css/leaflet.extra-markers.min.js"></script>
+
+  <!-- polyfill.io is library for using newer JavaScript features in older browers (such as Object.assign) -->
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
+  <!-- API Key -->
+  <script type="text/javascript" src="static/js/config.js"></script>
+
+  <!-- Our JavaScript -->
+  <script type="text/javascript" src="static/js/logic.js"></script>
+
 </body>
 
 </html>
