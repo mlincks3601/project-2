@@ -40,18 +40,23 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/api/bandconcerts/<year>")
-def bandconcerts(year):
+@app.route("/api/bandconcerts/<band_name>")
+def bandconcerts(band_name):
+    # return "test"
+    band = band_name.upper()
+    # year = int(year)
     # results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
-    results = db.session.query(Tours.id, Tours.city).filter(Tours.year==year).all()       
-    
+    results = db.session.query(Tours.year, func.count(Tours.year).label('concerts')).\
+        filter(func.upper(Tours.band)==band).\
+        group_by(Tours.year).all()       
+    #results = db.session.query(Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
     for r in results:
-        print(r)
+        print(r._asdict())
 
     # hover_text = [result[0] for result in results]
     #
 
-    tour_data = [{'id':r.id,'year':r.year,'city':r.city} for r in results]
+    tour_data = [r._asdict() for r in results]
         # "locationmode": "USA-states",
         #  "lat": lat,
         #  "lon": lon,
@@ -69,8 +74,12 @@ def bandconcerts(year):
 
     return jsonify(tour_data)
 
-@app.route("/api/bandyear/<band>/<year>")
-def bandyearloc(band, year):
+# @app.route("/api/test")
+# def test():
+#     return "test"
+
+@app.route("/api/bandyear/<band>")
+def bandyearloc(band):
     band = band.upper()
     print(band.upper())
     results = db.session.query(Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
