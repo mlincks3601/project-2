@@ -15,7 +15,7 @@ var myMap = L.map("marker-map", {
 
 
 // Create the tile layer that will be the background of our map
-var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+var markerMapLayer = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
   maxZoom: 18,
   id: "light-v10",
@@ -25,13 +25,13 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
 
 //Read in our band year location Data from SQL
 // Use this link to get the geojson data.
-// var link = 
+var link = "static/data/bandyearlocation.json";
 
 
 // Grabbing our sql data..
-d3.json("http://127.0.0.1:5000/bandconcerts").then(function(response) {
+d3.json(link).then(function(response) {
   var markerclustergroup = L.markerClusterGroup();
-  // Creating a layer with the retrieved data
+  // Creating a GeoJSON layer with the retrieved data
   console.log(response);
 
 
