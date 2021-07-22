@@ -27,6 +27,7 @@ var band = "Pixies"
 var link = `/api/bandyear/${band}`
 
 
+
 // // Grabbing our sql data..
 d3.json(link).then(function(response) {
   var markerclustergroup = L.markerClusterGroup();
