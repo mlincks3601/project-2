@@ -1,6 +1,8 @@
 
 
 // Initialize all of the LayerGroups we'll be using
+var layerGroup;
+
 var layers = {
   Pixies: new L.LayerGroup(),
   Willie_Nelson: new L.LayerGroup(),
@@ -8,8 +10,9 @@ var layers = {
 };
 // Creating map object
 var myMap = L.map("marker-map", {
-  center: [31.51, -96.42],
-  zoom: 8
+  center: [39.8283, -98.5795],
+  scrollWheelZoom: false,
+  zoom: 5
 });
 
 // Create the tile layer that will be the background of our map
@@ -19,69 +22,117 @@ var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{
   id: "light-v10",
   accessToken: API_KEY
 }).addTo(myMap);
-// console.log(API_KEY);
-
-//Read in our band year location Data from SQL
-// Use this link to get the geojson data.
-var band = "Pixies"
-var link = `/api/bandyear/${band}`
+ console.log(API_KEY);
 
 
 
-// // Grabbing our sql data..
-d3.json(link).then(function(response) {
-  var markerclustergroup = L.markerClusterGroup();
-  // Creating a layer with the retrieved data
-  console.log(response);
+/************************* 
+ * Event listener code to populate the map
+ ***********************/
 
+function processFilters() {
+  var band_name = d3.select('#sel-band').node().value;
+  var year = d3.select('#sel-year').node().value;
 
-
-// //for loop for coordinates
-for (var i = 0; i < response.length; i++) {
-  var location = response[i];
-//check for location property
-  if (location) {
-  // Add a new marker to the cluster group and bind a pop-up
-  L.marker([location.lat, location.long])
-  .bindPopup(location.state).addTo(myMap);
-  
+  buildChart(band_name, year);
+  populateMap(band_name, year);
 }
+
+function buildChart(band_name, year) {
+  d3.json(`/api/bandconcerts/${band_name}`).then(data => {
+    
+
+    //filteredData = data.filter(d => d['year'] == year);
+    console.log(data);
+    
+    var band_year = data.map(d => 'Year ' + d['year'].toString());
+    var band_concerts = data.map(d => d['concerts']);
+
+    var data = [{
+      type: 'bar',
+      x: band_concerts,
+      y: band_year,
+      orientation: 'h'
+    }];
+    
+    Plotly.newPlot('band-plot', data);
+
+  });
 }
-myMap.addLayer(markerclustergroup);
-});
 
-var markers = L.markerClusterGroup();
-markers.addLayer(L.marker([lat[1], [0]])
-        .bindPopup(response[i].descriptor));
+function populateMap(band_name, year){
 
-var marker = L.marker([32,-16], {
-  draggable: true,
-  title: "My First Marker"
-}).addTo(myMap);
+  var link = `/api/bandyear/${band_name}`
 
 
 
+  // // Grabbing our sql data..
+  d3.json(link).then(function(response) {
 
-// Initialize all of the LayerGroups we'll be using
-// var layers = {
-  // 2005: new L.LayerGroup(),
-  // 2010: new L.LayerGroup(),
-  // 2015: new L.LayerGroup(),
-  // 2019: new L.LayerGroup(),
-// };
 
-// Create the map with our layers
-// var map = L.map("marker-map", {
-  // center: [42.88, -97.38],
-  // zoom: 5,
-  // layers: [
-    // layers.2005,
-    // layers.2010,
-    // layers.2015,
-    // layers.2019,
-  // ]
-// });
-// 
+    // clear existing layers if they exist
+
+    try{
+      layerGroup.clearLayers();
+    }
+    catch {
+      console.log('No layer group to clear');
+    }
+    
+
+    var filteredData = response.filter(d => d['year'] == year);
+
+    // var markerclustergroup = L.markerClusterGroup();
+
+    // Creating a layer with the retrieved data
+    layerGroup = L.layerGroup().addTo(myMap);
+
+    // //for loop for coordinates
+    for (var i = 0; i < filteredData.length; i++) {
+      var location = filteredData[i];
+      
+      //check for location property
+      if (location) {
+      // Add a new marker to the cluster group and bind a pop-up
+       L.marker([location.lat, location.long])
+       .bindPopup(`${location.band}<br/>${location.year}<br/>${location.city}`).addTo(layerGroup);
+       }
+      }
+    //myMap.addLayer(markerclustergroup);
+    });
+
+    /*
+    var markers = L.markerClusterGroup();
+    markers.addLayer(L.marker([lat[1], [0]])
+            .bindPopup(`${filteredData[i].year}<hr/>${filteredData[i].year}<br/>${filteredData[i].city}`));
+
+    var marker = L.marker([32,-16], {
+      draggable: true,
+      title: "My First Marker"
+    }).addTo(myMap);
+    */
+}
+
+// // Initialize all of the LayerGroups we'll be using
+// // var layers = {
+//   // 2005: new L.LayerGroup(),
+//   // 2010: new L.LayerGroup(),
+//   // 2015: new L.LayerGroup(),
+//   // 2019: new L.LayerGroup(),
+// // };
+
+// // Create the map with our layers
+// // var map = L.map("marker-map", {
+//   // center: [42.88, -97.38],
+//   // zoom: 5,
+//   // layers: [
+//     // layers.2005,
+//     // layers.2010,
+//     // layers.2015,
+//     // layers.2019,
+//   // ]
+// // });
+// // 
 
 
 

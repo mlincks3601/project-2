@@ -54,9 +54,9 @@ def bandconcerts(band_name):
     band = band_name.upper()
     # year = int(year)
     # results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
-    results = db.session.query(Tours.year, func.count(Tours.year).label('concerts')).\
+    results = db.session.query(Tours.year, Tours.band, func.count(Tours.year).label('concerts')).\
         filter(func.upper(Tours.band)==band).\
-        group_by(Tours.year).all()       
+        group_by(Tours.year, Tours.band).all()       
     #results = db.session.query(Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
     for r in results:
         print(r._asdict())
@@ -90,17 +90,17 @@ def bandconcerts(band_name):
 def bandyearloc(band):
     band = band.upper()
     print(band.upper())
-    results = db.session.query(Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
+    results = db.session.query(Tours.band, Tours.year, Tours.city,Tours.lat, Tours.long).filter(func.upper(Tours.band)==band).all()
     
-    output = [{'city': r.city, 'lat':r.lat, 'long':r.long} for r in results]
+    output = [{'band': r.band, 'year': r.year, 'city': r.city, 'lat':r.lat, 'long':r.long} for r in results]
     
-    output_data = [
-        {
-            'band': band,
-            'year': year,
-            'location': "city"
-        }
-    ]
+    # output_data = [
+    #     {
+    #         'band': band,
+    #         'year': year,
+    #         'location': "city"
+    #     }
+    # ]
     return jsonify(output)
 
 if __name__ == "__main__":
